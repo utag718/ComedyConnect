@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="/artist/styles.css"> <!-- Link to existing CSS -->
+    <style>
+        .profile-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.profile-picture {
+    text-align: center;
+}
+
+.profile-picture img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--primary);
+}
+
+.upload-btn {
+    display: block;
+    margin-top: 10px;
+    background: var(--secondary);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+#upload-pic {
+    display: none;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+}
+
+.profile-info label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.profile-info input,
+.profile-info textarea {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid var(--gray);
+    width: 100%;
+}
+
+.profile-info textarea {
+    resize: none;
+    height: 80px;
+}
+
+.save-btn {
+    margin-top: 15px;
+    background: var(--primary);
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.save-btn:hover {
+    background: var(--secondary);
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Artist Hub</h2>
+        <nav>
+        <ul>
+        <li>
+            <a href="/artist/Dashboard/dashboard.html" style="text-decoration: none; color: white;">Dashboard</a>
+        </li>
+        <li>
+            <a href="/artist/myevents/myevents.html" style="text-decoration: none; color: white;">My Events</a>
+        </li>
+        
+        <li>
+            <a href="/artist/Analytics/analytics.html" style="text-decoration: none; color: white;">Analytics</a>
+        </li>
+        <li>
+            <a href="/artist/Notifications/notifications.html" style="text-decoration: none; color: white;">Notifications</a>
+        </li>
+        <li class="active">
+            <a href="/artist/Profile/profile.html" style="text-decoration: none; color: white;">Profile</a>
+        </li>
+        </ul>
+        </nav>
+        </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <h1>Profile</h1>
+        </header>
+
+        <div class="profile-container">
+            <div class="profile-picture">
+                <img id="profile-pic" src="default-profile.png" alt="Profile Picture">
+                <input type="file" id="upload-pic" accept="image/*">
+                <label for="upload-pic" class="upload-btn">Change Picture</label>
+            </div>
+
+            <div class="profile-info">
+                <label>Name:</label>
+                <input type="text" id="profile-name" value="John Doe">
+
+                <label>Email:</label>
+                <input type="email" id="profile-email" value="johndoe@example.com">
+
+                <label>Bio:</label>
+                <textarea id="profile-bio">Passionate stand-up comedian performing in major clubs.</textarea>
+
+                <label>Social Links:</label>
+                <input type="text" id="profile-links" value="https://instagram.com/johndoe">
+
+                <button class="save-btn" onclick="saveProfile()">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="profile.js"></script> <!-- Link to JS file -->
+
+</body>
+</html>

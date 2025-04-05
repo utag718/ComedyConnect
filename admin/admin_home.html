@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --deep-red: #EC0868;
+            --pink: #C200FB;
+            --light-cyan: #FFBC0A;
+            --warm-yellow: #EC7D10;
+            --bright-orange: #FC2F00;
+            --text-color: #333;
+
+            /* Add these new variables */
+            --bg-color: var(--light-cyan);
+            --card-bg: white;
+            --card-border: var(--pink);
+            --text-primary: var(--deep-red);
+            --text-secondary: var(--text-color);
+        }
+
+        /* Add dark mode variables */
+        [data-theme="dark"] {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --card-border: var(--deep-red);
+            --text-primary: var(--warm-yellow);
+            --text-secondary: #ffffff;
+            --sidebar-bg: #2d2d2d;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: var(--light-cyan);
+        }
+
+        .sidebar {
+            height: 100vh;
+            width: 250px;
+            position: fixed;
+            background: white;
+            padding: 20px 0;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+            transform: translateX(-250px);
+            transition: transform 0.3s;
+            margin-top: 60px; /* Keep this to avoid overlap */
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--warm-yellow);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 100;
+        }
+
+        .sidebar.active {
+            transform: translateX(0);
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background: var(--warm-yellow);
+            color: white;
+        }
+
+        .content {
+            margin-left: 0;
+            padding: 20px;
+            transition: margin-left 0.3s;
+        }
+
+        .content.shifted {
+            margin-left: 250px;
+        }
+
+        .sidebar-toggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--warm-yellow);
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            z-index: 100;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        header h1 {
+            color: var(--deep-red);
+            font-size: 2.5rem;
+        }
+
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 3px 8px rgba(194, 0, 251, 0.2);
+            border: 1px solid var(--pink);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h2 {
+            color: var(--deep-red);
+            margin: 0 0 15px;
+        }
+
+        .card p {
+            color: var(--warm-yellow);
+            font-size: 2rem;
+            margin: 0;
+            font-weight: bold;
+        }
+
+        .quick-actions {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+
+        .quick-actions h2 {
+            color: var(--deep-red);
+            text-align: center;
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .action-card {
+            text-align: center;
+            padding: 20px;
+            border: 1px solid var(--pink);
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .emoji {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .action-card button {
+            background: var(--warm-yellow);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: background 0.3s;
+        }
+
+        .action-card button:hover {
+            background: var(--bright-orange);
+        }
+
+        .system-status {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .system-status h2 {
+            color: var(--deep-red);
+            text-align: center;
+        }
+
+        .status-grid {
+            display: grid;
+            gap: 15px;
+        }
+
+        .status-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+        }
+
+        .status-bar {
+            flex: 1;
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .status-fill {
+            height: 100%;
+            background: var(--warm-yellow);
+            border-radius: 5px;
+        }
+
+        .status-value {
+            color: var(--deep-red);
+            font-weight: bold;
+            min-width: 50px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <!-- Add the theme toggle button right here, after body tag -->
+    <button id="themeToggle" style="position: fixed; top: 20px; right: 20px; padding: 10px; background: var(--warm-yellow); color: white; border: none; border-radius: 5px; cursor: pointer; z-index: 1000;">
+        🌓 Toggle Theme
+    </button>
+
+    <div class="sidebar" id="sidebar">
+        <a href="user_management.html">User Management</a>
+        <a href="data_analytics.html">Data Analytics</a>
+        <a href="content_moderation.html">Content Moderation</a>
+        <a href="financial_dashboard.html">Financial Dashboard</a>
+        <a href="system_health.html">System Health</a>
+        <a href="event_management.html">Event Management</a>
+        <a href="reports.html">Reports</a>
+        <a href="settings.html">Settings</a>
+        <a href="../index.html">Logout</a>
+    </div>
+
+    <button class="sidebar-toggle" id="sidebarToggle">☰</button>
+
+    <div class="content" id="mainContent">
+        <header>
+            <h1>Admin Dashboard</h1>
+        </header>
+
+        <section class="stats-cards">
+            <div class="card">
+                <h2>Total Users</h2>
+                <p>1,234</p>
+            </div>
+            <div class="card">
+                <h2>Active Events</h2>
+                <p>45</p>
+            </div>
+            <div class="card">
+                <h2>Revenue</h2>
+                <p>₹50,000</p>
+            </div>
+            <div class="card">
+                <h2>New Bookings</h2>
+                <p>28</p>
+            </div>
+        </section>
+
+        <section class="quick-actions">
+            <h2>Quick Actions</h2>
+            <div class="action-grid">
+                <div class="action-card">
+                    <span class="emoji">🎭</span>
+                    <h3>Pending Events</h3>
+                    <p>5 events need review</p>
+                    <button onclick="window.location.href='event_management.html'">Review Now</button>
+                </div>
+                <div class="action-card">
+                    <span class="emoji">⚠️</span>
+                    <h3>Reported Content</h3>
+                    <p>3 new reports</p>
+                    <button onclick="window.location.href='content_moderation.html'">Moderate</button>
+                </div>
+                <div class="action-card">
+                    <span class="emoji">💰</span>
+                    <h3>Payment Issues</h3>
+                    <p>2 pending refunds</p>
+                    <button onclick="window.location.href='financial_dashboard.html'">Process</button>
+                </div>
+            </div>
+        </section>
+
+        <section class="system-status">
+            <h2>System Status</h2>
+            <div class="status-grid">
+                <div class="status-item">
+                    <span>Server Health</span>
+                    <div class="status-bar">
+                        <div class="status-fill" style="width: 95%"></div>
+                    </div>
+                    <span class="status-value">95%</span>
+                </div>
+                <div class="status-item">
+                    <span>Database Load</span>
+                    <div class="status-bar">
+                        <div class="status-fill" style="width: 75%"></div>
+                    </div>
+                    <span class="status-value">75%</span>
+                </div>
+                <div class="status-item">
+                    <span>API Response</span>
+                    <div class="status-bar">
+                        <div class="status-fill" style="width: 88%"></div>
+                    </div>
+                    <span class="status-value">88%</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+
+        sidebarToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active');
+            mainContent.classList.toggle('shifted');
+        });
+    </script>
+
+    <!-- Add theme toggle script here, before closing body tag -->
+    <style>
+        /* Add these styles to your existing style section */
+        body {
+            background: var(--bg-color);
+        }
+
+        .card, .quick-actions, .system-status, .action-card, .sidebar {
+            background: var(--card-bg);
+        }
+
+        .sidebar a, .status-item span, .action-card p, .action-card h3 {
+            color: var(--text-secondary);
+        }
+
+        header h1, .card h2, .quick-actions h2, .system-status h2 {
+            color: var(--text-primary);
+        }
+
+        .status-bar {
+            background: var(--card-border);
+        }
+
+        * {
+            transition: background-color 0.3s, color 0.3s;
+        }
+    </style>
+
+    <!-- Replace the incorrect script with this correct one -->
+    <script>
+        const themeToggle = document.getElementById('themeToggle');
+        
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            localStorage.setItem('themeTimestamp', Date.now());
+        });
+    
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'theme') {
+                document.documentElement.setAttribute('data-theme', e.newValue);
+            }
+        });
+    </script>
+</body>
+</html>

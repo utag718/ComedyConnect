@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <link rel="stylesheet" href="/artist/styles.css"> <!-- Link to your existing CSS -->
+    <style>
+        .notification-card {
+    background: var(--white);
+    padding: 15px;
+    border-radius: var(--border-radius);
+    box-shadow: 2px 2px 8px var(--shadow);
+    position: relative;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.notification-card p {
+    font-size: 16px;
+    color: #333;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.delete-notification {
+    background: var(--secondary);
+    color: var(--white);
+    border: none;
+    padding: 8px 14px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.delete-notification:hover {
+    background: #b31228;
+    transform: scale(1.05);
+}
+
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Artist Hub</h2>
+        <nav>
+        <ul>
+        <li>
+            <a href="/artist/Dashboard/dashboard.html" style="text-decoration: none; color: white;">Dashboard</a>
+        </li>
+        <li>
+            <a href="/artist/myevents/myevents.html" style="text-decoration: none; color: white;">My Events</a>
+        </li>
+        
+        <li>
+            <a href="/artist/Analytics/analytics.html" style="text-decoration: none; color: white;">Analytics</a>
+        </li>
+        <li class="active">
+            <a href="/artist/Notifications/notifications.html" style="text-decoration: none; color: white;">Notifications</a>
+        </li>
+        <li>
+            <a href="/artist/Profile/profile.html" style="text-decoration: none; color: white;">Profile</a>
+        </li>
+        </ul>
+        </nav>
+        </div>
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <h1>Notifications</h1>
+        </header>
+
+        <div class="notifications">
+            <h2>Recent Notifications</h2>
+
+            <div class="notification-card">
+                <p><strong>🎉 Event Approved:</strong> Your event **"Stand-Up Night"** has been approved! 🎭</p>
+                <button class="delete-notification" onclick="deleteNotification(this)">Dismiss</button>
+            </div>
+
+            <div class="notification-card">
+                <p><strong>❌ Event Rejected:</strong> Your event **"Comedy Roast"** was rejected due to scheduling conflicts.</p>
+                <button class="delete-notification" onclick="deleteNotification(this)">Dismiss</button>
+            </div>
+
+            <div class="notification-card">
+                <p><strong>📍 New Venue Available:</strong> **"Laugh Arena - Downtown"** is now available for booking! 🏛️</p>
+                <button class="delete-notification" onclick="deleteNotification(this)">Dismiss</button>
+            </div>
+
+            <div class="notification-card">
+                <p><strong>📅 Event Reminder:</strong> **"Improv Comedy Show"** is scheduled for tomorrow at 7 PM. Don't forget to prepare! 🎤</p>
+                <button class="delete-notification" onclick="deleteNotification(this)">Dismiss</button>
+            </div>
+
+            <div class="notification-card">
+                <p><strong>⚡ Urgent Update:</strong> A last-minute slot opened for **"Open Mic Night"**. Book now! 🕒</p>
+                <button class="delete-notification" onclick="deleteNotification(this)">Dismiss</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function deleteNotification(button) {
+            button.parentElement.remove();
+        }
+    </script>
+
+</body>
+</html>

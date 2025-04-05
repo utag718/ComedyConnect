@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Register</title>
+    <link rel="stylesheet" href="/artist/styles.css">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
+    <style>
+        /* FANTA Theme Colors */
+:root {
+    --primary: #f26241;
+    --secondary: #f6ae2d;
+    --bg-light: #cbeef3;
+    --text-dark: #880d1e;
+}
+
+/* General Styles */
+body {
+    font-family: 'Poppins', sans-serif;
+    background: var(--bg-light);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Authentication Container */
+.auth-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* Authentication Box */
+.auth-box {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 350px;
+}
+
+.auth-box h2 {
+    color: var(--text-dark);
+}
+
+/* Input Fields */
+.input-field {
+    margin: 10px 0;
+}
+
+.input-field input,
+.input-field select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid var(--primary);
+    border-radius: 5px;
+    font-size: 16px;
+    outline: none;
+}
+
+.input-field input:focus,
+.input-field select:focus {
+    border-color: var(--secondary);
+}
+
+/* Button */
+#auth-btn {
+    width: 100%;
+    padding: 12px;
+    background: var(--primary);
+    color: white;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+#auth-btn:hover {
+    background: var(--secondary);
+}
+
+/* Toggle Login/Register */
+#toggle-text {
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+#toggle-btn {
+    color: var(--primary);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+#toggle-btn:hover {
+    text-decoration: underline;
+}
+
+/* Hidden Class */
+.hidden {
+    display: none;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2 id="form-title">Login</h2>
+
+            <form id="auth-form">
+                <div id="name-field" class="input-field hidden">
+                    <input type="text" id="full-name" placeholder="Full Name">
+                </div>
+
+                <div class="input-field">
+                    <input type="email" id="email" placeholder="Email" required>
+                </div>
+
+                <div class="input-field">
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+
+                <div id="role-field" class="input-field hidden">
+                    <select id="role">
+                        <option value="customer">Customer</option>
+                        <option value="artist">Artist</option>
+                        <option value="venue_manager">Location Manager</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+
+                <button type="submit" id="auth-btn">Login</button>
+
+                <p id="toggle-text">Don't have an account? <span id="toggle-btn">Register</span></p>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+    <script src="login_script.js"></script>
+</body>
+</html>

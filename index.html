@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comedy Connect - Your Comedy Show Marketplace</title>
+    <link rel="stylesheet" href="styles_landing.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">ComedyConnect</div>
+            <div class="nav-links">
+                <a href="#hero">Home</a>
+                <a href="#features">About</a>
+                <a href="#contact">Contact</a>
+                <button class="login-btn" onclick="openLoginModal()">Login</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero" class="hero">
+            <h1>Welcome to ComedyConnect</h1>
+            <p>The ultimate platform connecting venues, comedians, and comedy lovers</p>
+            <div class="cta-buttons">
+                <div class="icon-card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <button onclick="window.open('venue-signup.html', '_blank')">Join as a Venue Manager</button>
+                </div>
+                <div class="icon-card">
+                    <i class="fas fa-microphone-alt"></i>
+                    <button onclick="window.open('comedian-signup.html', '_blank')">Join as a Comedian</button>
+                </div>
+                <div class="icon-card">
+                    <i class="fas fa-ticket-alt"></i>
+                    <button onclick="window.open('customer-signup.html', '_blank')">Explore Events as an Audience</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <section id="features" class="features">
+        <h2>Why Choose ComedyConnect?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>For Venues</h3>
+                <ul>
+                    <li>Easy booking management</li>
+                    <li>Access to top comedic talent</li>
+                    <li>Increased visibility</li>
+                    <li>Analytics and insights</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>For Comedians</h3>
+                <ul>
+                    <li>Find performance opportunities</li>
+                    <li>Build your fanbase</li>
+                    <li>Showcase your portfolio</li>
+                    <li>Network with venues</li>
+                </ul>
+            </div>
+            <div class="feature-card">
+                <h3>For Comedy Fans</h3>
+                <ul>
+                    <li>Discover local shows</li>
+                    <li>Easy ticket booking</li>
+                    <li>Personalized recommendations</li>
+                    <li>Special discounts</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section class="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Sign Up</h3>
+                <p>Choose your role and create your profile</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Connect</h3>
+                <p>Find venues, comedians, or shows that match your interests</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Book & Perform</h3>
+                <p>Schedule shows, book tickets, or arrange performances</p>
+            </div>
+        </div>
+    </section>
+    <section id="stats" class="stats">
+        <h2>Our Growing Community</h2>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>500+</h3>
+                <p>Partner Venues</p>
+            </div>
+            <div class="stat-card">
+                <h3>1000+</h3>
+                <p>Active Comedians</p>
+            </div>
+            <div class="stat-card">
+                <h3>50,000+</h3>
+                <p>Monthly Visitors</p>
+            </div>
+            <div class="stat-card">
+                <h3>10,000+</h3>
+                <p>Shows Booked</p>
+            </div>
+        </div>
+    </section>
+    <section id="contact" class="contact">
+        <h2>Contact Us</h2>
+       
+            <div class="contact-form">
+                <h3>Send us a Message</h3>
+                <form id="contactForm">
+                    <div class="form-group">
+                        <input type="text" id="name" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" name="message" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2>Login</h2>
+            <div class="role-buttons">
+                <button onclick="selectLoginRole('venue')">Venue Manager</button>
+                <button onclick="selectLoginRole('comedian')">Comedian</button>
+                <button onclick="selectLoginRole('customer')">Customer</button>
+            </div>
+            <form id="loginForm">
+                <input type="email" placeholder="Email" required>
+                <input type="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('registrationModal')">&times;</span>
+            <h2>Sign Up</h2>
+            <form id="registrationForm">
+                <!-- Dynamic form fields will be inserted here -->
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About ComedyConnect</h3>
+                <p>ComedyConnect is the ultimate platform connecting venues, comedians, and comedy lovers. Join our community and be part of the laughter revolution.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#hero">Home</a>
+                <a href="#features">About Us</a>
+                <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <div class="footer-contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>123 Comedy Street, Laughton, LA 12345</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>info@comedyconnect.com</span>
+                    </div>
+                </div>
+                <div class="footer-social">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <form class="footer-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit">Subscribe</button>
+                </form>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 ComedyConnect. All rights reserved.</p>
+        </div>
+    </footer>
+    <script src="script_landing.js"></script>
+</body>
+</html>

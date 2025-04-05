@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Management</title>
+    <style>
+        :root {
+            --deep-red: #EC0868;
+            --pink: #C200FB;
+            --light-cyan: #FFBC0A;
+            --warm-yellow: #EC7D10;
+            --bright-orange: #FC2F00;
+            --text-color: #333;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--light-cyan);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--deep-red);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        .event-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .filter-bar {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            gap: 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .filter-button {
+            background: var(--warm-yellow);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-button:hover, .filter-button.active {
+            background: var(--bright-orange);
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 8px rgba(194, 0, 251, 0.2);
+            border: 1px solid var(--pink);
+            transition: transform 0.3s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .event-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .event-details {
+            padding: 15px;
+        }
+
+        .event-title {
+            color: var(--deep-red);
+            margin: 0 0 10px;
+            font-size: 1.2rem;
+        }
+
+        .event-info {
+            color: var(--text-color);
+            margin: 5px 0;
+            font-size: 0.9rem;
+        }
+
+        .event-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin-top: 10px;
+        }
+
+        .status-pending {
+            background: var(--light-cyan);
+            color: var(--text-color);
+        }
+
+        .status-approved {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-rejected {
+            background: var(--deep-red);
+            color: white;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .action-button {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .action-button:hover {
+            opacity: 0.9;
+        }
+
+        .approve-btn {
+            background: var(--warm-yellow);
+            color: white;
+        }
+
+        .reject-btn {
+            background: var(--deep-red);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Event Management</h1>
+    <div class="event-container">
+        <div class="filter-bar">
+            <button class="filter-button active">All Events</button>
+            <button class="filter-button">Pending</button>
+            <button class="filter-button">Approved</button>
+            <button class="filter-button">Rejected</button>
+        </div>
+
+        <div class="event-grid">
+            <div class="event-card">
+                <img src="https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg" alt="Comedy Night" class="event-image">
+                <div class="event-details">
+                    <h3 class="event-title">Comedy Night Special</h3>
+                    <p class="event-info">📅 Date: May 30, 2025</p>
+                    <p class="event-info">📍 Venue: The Laughing Club</p>
+                    <p class="event-info">👤 Organizer: John Smith</p>
+                    <span class="event-status status-pending">Pending Review</span>
+                    <div class="action-buttons">
+                        <button class="action-button approve-btn">Approve</button>
+                        <button class="action-button reject-btn">Reject</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update the second card -->
+            <div class="event-card">
+                <img src="https://images.pexels.com/photos/713149/pexels-photo-713149.jpeg" alt="Stand Up Show" class="event-image">
+                <div class="event-details">
+                    <h3 class="event-title">Stand Up Comedy Show</h3>
+                    <p class="event-info">📅 Date: Dec 20, 2023</p>
+                    <p class="event-info">📍 Venue: City Theater</p>
+                    <p class="event-info">👤 Organizer: Sarah Johnson</p>
+                    <span class="event-status status-approved">Approved</span>
+                    <div class="action-buttons">
+                        <button class="action-button approve-btn">Approve</button>
+                        <button class="action-button reject-btn">Reject</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Update the third card -->
+            <div class="event-card">
+                <img src="https://images.pexels.com/photos/2608517/pexels-photo-2608517.jpeg" alt="Improv Night" class="event-image">
+                <div class="event-details">
+                    <h3 class="event-title">Improv Night</h3>
+                    <p class="event-info">📅 Date: Dec 25, 2023</p>
+                    <p class="event-info">📍 Venue: Comedy Club</p>
+                    <p class="event-info">👤 Organizer: Mike Brown</p>
+                    <span class="event-status status-rejected">Rejected</span>
+                    <div class="action-buttons">
+                        <button class="action-button approve-btn">Approve</button>
+                        <button class="action-button reject-btn">Reject</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Filter functionality
+        const filterButtons = document.querySelectorAll('.filter-button');
+        const eventCards = document.querySelectorAll('.event-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active button
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+
+                // Filter events
+                const filterType = button.textContent.toLowerCase();
+                eventCards.forEach(card => {
+                    const status = card.querySelector('.event-status').textContent.toLowerCase();
+                    if (filterType === 'all events' || status.includes(filterType)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Updated Approve/Reject functionality
+        document.querySelectorAll('.action-buttons').forEach(actionButtons => {
+            actionButtons.addEventListener('click', (e) => {
+                if (e.target.classList.contains('action-button')) {
+                    const card = e.target.closest('.event-card');
+                    const statusElement = card.querySelector('.event-status');
+                    const isApprove = e.target.classList.contains('approve-btn');
+                    const currentStatus = statusElement.textContent.toLowerCase();
+
+                    // Toggle status if clicking the same action type
+                    if ((isApprove && currentStatus === 'approved') || 
+                        (!isApprove && currentStatus === 'rejected')) {
+                        statusElement.className = 'event-status status-pending';
+                        statusElement.textContent = 'Pending Review';
+                    } else {
+                        statusElement.className = `event-status ${isApprove ? 'status-approved' : 'status-rejected'}`;
+                        statusElement.textContent = isApprove ? 'Approved' : 'Rejected';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

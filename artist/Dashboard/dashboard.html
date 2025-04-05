@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Artist Dashboard</title>
+<link rel="stylesheet" href="/artist/styles.css">
+<script defer src="script_dashboard.js"></script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
+</head>
+<body>
+
+<div class="sidebar">
+<h2>Artist Hub</h2>
+<nav>
+<ul>
+<li class="active">
+    <a href="/artist/Dashboard/dashboard.html" style="text-decoration: none; color: white;">Dashboard</a>
+</li>
+<li>
+    <a href="/artist/myevents/myevents.html" style="text-decoration: none; color: white;">My Events</a>
+</li>
+
+<li>
+    <a href="/artist/Analytics/analytics.html" style="text-decoration: none; color: white;">Analytics</a>
+</li>
+<li>
+    <a href="/artist/Notifications/notifications.html" style="text-decoration: none; color: white;">Notifications</a>
+</li>
+<li>
+    <a href="/artist/Profile/profile.html" style="text-decoration: none; color: white;">Profile</a>
+</li>
+</ul>
+</nav>
+</div>
+
+<div class="main-content">
+<header>
+<h1 class="dashboard_written">Dashboard</h1>
+</header>
+
+<!-- Artist Profile Section -->
+<section class="artist-profile">
+    <div class="profile-pic-container">
+    <img id="profilePic" src="artist_assets/ab1.png" alt="Artist Profile">
+    <input type="file" id="uploadProfilePic" accept="image/*">
+    </div>
+    <div class="profile-info">
+    <h2 id="artistName">Abishek Upmanyu</h2>
+    <p id="artistBio">Stand-up comedian | Storyteller | Improviser</p>
+    <p><strong>Email:</strong> <span id="artistEmail">abhi.up@example.com</span></p>
+    </div>
+    </section>
+    
+    <!-- Event Overview -->
+    <section class="events-panel">
+        <div class="events-header">
+            <h2>Event Overview</h2>
+        </div>
+        
+        <div class="events-list" id="eventsContainer">
+            <!-- Sample Event Cards -->
+            <div class="event-card">
+                <h3>Stand-up Comedy Night</h3>
+                <p><strong>Date:</strong> 2025-03-15</p>
+                <p><strong>Venue:</strong> The Laughing Spot</p>
+                <p><strong>Status:</strong> Pending</p>
+            </div>
+
+            <div class="event-card">
+                <h3>Improv Show</h3>
+                <p><strong>Date:</strong> 2025-04-10</p>
+                <p><strong>Venue:</strong> Comedy Central Arena</p>
+                <p><strong>Status:</strong> Approved</p>
+            </div>
+
+            <div class="event-card">
+                <h3>Open Mic Night</h3>
+                <p><strong>Date:</strong> 2025-05-05</p>
+                <p><strong>Venue:</strong> Downtown Comedy Club</p>
+                <p><strong>Status:</strong> Rejected</p>
+            </div>
+        </div>
+    </section>
+    
+
+<!-- Available Venues Section -->
+<section class="event-venue-container">
+<section class="venue-availability">
+<h2>Available Venues</h2>
+<div class="venue-list" id="venueContainer">
+<!-- Venues will be dynamically loaded here -->
+</div>
+</section>
+</section>
+<br>
+
+<!-- Event Booking Form -->
+<section class="event-venue-container">
+<section class="event-booking">
+<h2>Book an Event</h2>
+<button id="openEventForm">+ Book an Event</button>
+<div id="eventFormContainer"></div>
+</section>
+</section>
+
+<!-- Notifications -->
+<section class="notifications">
+<h2>Notifications</h2>
+<div id="notificationList">
+<p>No new notifications</p>
+</div>
+</section>
+
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+
+</body>
+</html>

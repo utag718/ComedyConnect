@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">🔔 Notifications</h1>
+        <div id="notifications-list" class="mt-4">
+            <!-- Default Dummy Notifications (Shown when Firebase is empty) -->
+            <div class="alert alert-warning">
+                <strong>⚡ System Update:</strong> The dashboard will be down for maintenance at 2 AM.
+            </div>
+            <div class="alert alert-info">
+                <strong>🎉 New Feature:</strong> Dark mode is now available! Check it out in settings.
+            </div>
+            <div class="alert alert-success">
+                <strong>✅ Payment Received:</strong> Your last booking has been successfully processed.
+            </div>
+            <div class="alert alert-danger">
+                <strong>🚨 Pending Payment:</strong> You have an unpaid invoice of $45 for your last booking.
+            </div>
+            <div class="alert alert-primary">
+                <strong>🎭 Upcoming Show:</strong> Your next event "Comedy Night" is scheduled for Feb 25, 2025.
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyA2O9jsyrR3D-5exBvJ8YRu0J965CuW8os",
+            authDomain: "teamupi.firebaseapp.com",
+            databaseURL: "https://teamupi-default-rtdb.firebaseio.com/",
+            projectId: "teamupi",
+            storageBucket: "teamupi.appspot.com",
+            messagingSenderId: "560554049296",
+            appId: "1:560554049296:web:5c31effe434c034126af95",
+            measurementId: "G-PHCD35DEY5"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+        const notificationsRef = ref(database, "notifications/");
+
+        const notificationsList = document.getElementById("notifications-list");
+
+        onValue(notificationsRef, (snapshot) => {
+            notificationsList.innerHTML = "";
+
+            if (!snapshot.exists()) {
+                notificationsList.innerHTML = `
+                    <div class="alert alert-warning">
+                        <strong>⚡ System Update:</strong> The dashboard will be down for maintenance at 2 AM.
+                    </div>
+                    <div class="alert alert-info">
+                        <strong>🎉 New Feature:</strong> Dark mode is now available! Check it out in settings.
+                    </div>
+                    <div class="alert alert-success">
+                        <strong>✅ Payment Received:</strong> Your last booking has been successfully processed.
+                    </div>
+                    <div class="alert alert-danger">
+                        <strong>🚨 Pending Payment:</strong> You have an unpaid invoice of $45 for your last booking.
+                    </div>
+                    <div class="alert alert-primary">
+                        <strong>🎭 Upcoming Show:</strong> Your next event "Comedy Night" is scheduled for Feb 25, 2025.
+                    </div>
+                `;
+                return;
+            }
+
+            snapshot.forEach((childSnapshot) => {
+                const notification = childSnapshot.val();
+                const notificationDiv = document.createElement("div");
+                notificationDiv.className = "alert alert-info";
+                notificationDiv.innerHTML = `<strong>${notification.title}</strong><br>${notification.message}`;
+                notificationsList.appendChild(notificationDiv);
+            });
+        });
+    </script>
+</body>
+</html>

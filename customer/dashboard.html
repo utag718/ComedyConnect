@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ComedyConnect</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="dashboard_styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+</head>
+<body>
+    <nav class="main-nav">
+        <div class="nav-logo">
+            <h1 class="logo-text">ComedyConnect</h1>
+        </div>
+        <div class="nav-links">
+            <a href="dashboard.html" class="active">Home</a>
+            <a href="profile.html" class="user-profile">
+                <i class="fas fa-user-circle"></i>
+                <span>User1</span>
+            </a>
+        </div>
+    </nav>
+    
+    <div class="search-section">
+        <div class
+        ="search-container">
+            <div class="search-input-group">
+                <i class="fas fa-map-marker-alt"></i>
+                <input type="text" id="location-filter" placeholder="City or Zip Code">
+            </div>
+            <div class="search-input-group">
+                <i class="far fa-calendar"></i>
+                <input type="text" id="date-filter" placeholder="All Dates">
+            </div>
+            <div class="search-input-group main-search">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search by Artist, Event or Venue">
+            </div>
+            <button class="search-button">Search</button>
+        </div>
+    </div>
+
+        <!-- Main content area -->
+        <main class="main-content">
+            <!-- Genre Filter Sidebar -->
+            <div class="genre-sidebar">
+                <h2>Genre</h2>
+                <ul class="genre-list">
+                    <li class="genre-item active" data-genre="all">
+                        <i class="fas fa-globe"></i>All Genres
+                    </li>
+                    <li class="genre-item" data-genre="standup">
+                        <i class="fas fa-microphone"></i>Stand-up
+                    </li>
+                    <li class="genre-item" data-genre="improv">
+                        <i class="fas fa-theater-masks"></i>Improv
+                    </li>
+                    <li class="genre-item" data-genre="sketch">
+                        <i class="fas fa-pen-fancy"></i>Sketch
+                    </li>
+                    <li class="genre-item" data-genre="budding">
+                        <i class="fas fa-star"></i>Budding Artists
+                    </li>
+                    <li class="genre-item" data-genre="lgbtqa">
+                        <i class="fas fa-rainbow"></i>LGBTQA+
+                    </li>
+                    <li class="genre-item" data-genre="women">
+                        <i class="fas fa-venus"></i>Women in Comedy
+                    </li>
+                    <li class="genre-item" data-genre="kids">
+                        <i class="fas fa-child"></i>Kids in Comedy
+                    </li>
+                </ul>
+                <h2 class="language-header">Language</h2>
+                <ul class="genre-list language-list">
+                    <li class="genre-item" data-genre="marathi">
+                        <i class="fas fa-language"></i>Marathi
+                    </li>
+                    <li class="genre-item" data-genre="hindi">
+                        <i class="fas fa-language"></i>Hindi
+                    </li>
+                    <li class="genre-item" data-genre="english">
+                        <i class="fas fa-language"></i>English
+                    </li>
+                </ul>
+            </div>
+
+            <div class="events-container-wrapper">
+                <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Comedy Events</h1>
+                </div>
+        
+            </header>
+
+            <!-- Events Grid -->
+            <div class="events-grid" id="events-container">
+                <!-- Event cards will be dynamically inserted here -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal" id="booking-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Book Tickets</h2>
+            <div class="booking-details">
+                <div class="event-info">
+                    <h3 id="modal-event-title"></h3>
+                    <p id="modal-event-datetime"></p>
+                    <p id="modal-event-venue"></p>
+                </div>
+                <div class="seat-selection">
+                    <h3>Select Seats</h3>
+                    <div class="seat-map" id="seat-map">
+                        <!-- Seat map will be dynamically generated -->
+                    </div>
+                </div>
+                <div class="booking-summary">
+                    <h3>Booking Summary</h3>
+                    <p>Selected Seats: <span id="selected-seats">None</span></p>
+                    <p>Total Amount: ₹<span id="total-amount">0</span></p>
+                    <button class="btn-primary" id="confirm-booking">Confirm Booking</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <section class="chat-window">
+        <button class="close">x close</button>
+        <div class="chat">
+            <div class="model">
+                <p>Hi, how can I help you?</p>
+            </div>
+            
+        </div>
+        <div class="input-area">
+            <input placeholder="Ask me anything..." type="text">
+            <button>
+                <img src="send-icon.png" alt="send">
+            </button>
+        </div>
+    </section>
+
+    <div class="chat-button">
+        <img src="chat-icon.png" alt="start chat">
+    </div>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "@google/generative-ai": "https://esm.run/@google/generative-ai"
+          }
+        }
+    </script>
+    
+    <script type="module" src="main.js"></script>
+    <script src="dashboard_script.js"></script>
+</body>
+</html>

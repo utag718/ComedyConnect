@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Event Analytics</title>
+    <link rel="stylesheet" href="/artist/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js"></script>
+
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Artist Hub</h2>
+        <nav>
+        <ul>
+            <li>
+                <a href="/artist/Dashboard/dashboard.html" style="text-decoration: none; color: white;">Dashboard</a>
+            </li>
+            <li>
+                <a href="/artist/myevents/myevents.html" style="text-decoration: none; color: white;">My Events</a>
+            </li>      
+            <li class="active">
+                <a href="/artist/Analytics/analytics.html" style="text-decoration: none; color: white;">Analytics</a>
+            </li>       
+            <li>
+                <a href="/artist/Notifications/notifications.html" style="text-decoration: none; color: white;">Notifications</a>
+            </li>
+            <li>
+                <a href="/artist/Profile/profile.html" style="text-decoration: none; color: white;">Profile</a>
+            </li>
+        </ul>
+        </nav>
+        
+                
+    </div>
+
+     <!-- Main Content -->
+     <div class="main-content">
+        <header>
+            <h1>Event Analytics</h1>
+        </header>
+
+        <!-- Event Stats -->
+        <div class="events-panel">
+            <h2>Event Statistics</h2>
+            <p><strong>Total Events:</strong> <span id="totalEvents">12</span></p>
+            <p><strong>Upcoming Events:</strong> <span id="upcomingEvents">5</span></p>
+            <p><strong>Completed Events:</strong> <span id="completedEvents">7</span></p>
+        </div>
+
+        <!-- Most Popular Events -->
+        <div class="events-panel">
+            <h2>Top 3 Most Popular Events</h2>
+            <ul id="popularEventsList">
+                <li>Comedy Night - 150 attendees</li>
+                <li>Stand-up Gala - 120 attendees</li>
+                <li>Laugh Fest - 100 attendees</li>
+            </ul>
+        </div>
+
+        <!-- Artist Performance Insights -->
+        <div class="events-panel">
+            <h2>Artist Performance Insights</h2>
+            <canvas id="artistChart"></canvas>
+        </div>
+
+        <!-- Location Insights -->
+        <div class="events-panel">
+            <h2>Event Locations with Highest Attendance</h2>
+            <canvas id="locationChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Hardcoded Data for Charts
+        const artistData = {
+            "John Doe": 250,
+            "Jane Smith": 200,
+            "Chris Rock": 180
+        };
+        
+        const locationData = {
+            "Comedy Club A": 230,
+            "Theater B": 190,
+            "Outdoor Venue C": 150
+        };
+
+        function renderCharts() {
+            const artistCtx = document.getElementById("artistChart").getContext("2d");
+            new Chart(artistCtx, {
+                type: "bar",
+                data: {
+                    labels: Object.keys(artistData),
+                    datasets: [{
+                        label: "Total Audience",
+                        data: Object.values(artistData),
+                        backgroundColor: "#f49cbb"
+                    }]
+                }
+            });
+
+            const locationCtx = document.getElementById("locationChart").getContext("2d");
+            new Chart(locationCtx, {
+                type: "pie",
+                data: {
+                    labels: Object.keys(locationData),
+                    datasets: [{
+                        data: Object.values(locationData),
+                        backgroundColor: ["#f6ae2d", "#4caf50", "#f26241"]
+                    }]
+                }
+            });
+        }
+        
+        document.addEventListener("DOMContentLoaded", renderCharts);
+    </script>
+</body>
+</html>

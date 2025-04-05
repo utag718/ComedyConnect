@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Health</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --deep-red: #EC0868;
+            --pink: #C200FB;
+            --light-cyan: #FFBC0A;
+            --warm-yellow: #EC7D10;
+            --bright-orange: #FC2F00;
+            --text-color: #333;
+            --success-green: #28a745;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--light-cyan);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--deep-red);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+
+        .health-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .status-card {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 8px rgba(194, 0, 251, 0.2);
+            border: 1px solid var(--pink);
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .status-good {
+            background-color: var(--success-green);
+        }
+
+        .status-warning {
+            background-color: var(--warm-yellow);
+        }
+
+        .status-critical {
+            background-color: var(--deep-red);
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            color: var(--warm-yellow);
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .chart-container {
+            grid-column: span 2;
+            height: 300px;
+        }
+
+        .log-container {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .log-entry {
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+        }
+
+        .log-entry:hover {
+            background: var(--light-cyan);
+        }
+
+        .log-time {
+            color: var(--warm-yellow);
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .refresh-button {
+            background: var(--warm-yellow);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .refresh-button:hover {
+            background: var(--bright-orange);
+        }
+    </style>
+</head>
+<body>
+    <h1>System Health Monitor</h1>
+    <div class="health-container">
+        <div class="status-card">
+            <div class="status-header">
+                <h2>Server Status</h2>
+                <span class="status-indicator status-good"></span>
+            </div>
+            <div class="metric-value">99.9%</div>
+            <p>Uptime Last 30 Days</p>
+        </div>
+
+        <div class="status-card">
+            <div class="status-header">
+                <h2>CPU Usage</h2>
+                <span class="status-indicator status-warning"></span>
+            </div>
+            <div class="metric-value">75%</div>
+            <p>Current Utilization</p>
+        </div>
+
+        <div class="status-card">
+            <div class="status-header">
+                <h2>Memory Usage</h2>
+                <span class="status-indicator status-good"></span>
+            </div>
+            <div class="metric-value">45%</div>
+            <p>8GB / 16GB Used</p>
+        </div>
+
+        <div class="status-card chart-container">
+            <canvas id="performanceChart"></canvas>
+        </div>
+
+        <div class="status-card">
+            <h2>System Logs</h2>
+            <div class="log-container">
+                <div class="log-entry">
+                    <span class="log-time">10:45 AM</span>
+                    <span>Database backup completed successfully</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-time">10:30 AM</span>
+                    <span>High CPU usage detected (75%)</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-time">10:15 AM</span>
+                    <span>System update installed</span>
+                </div>
+                <div class="log-entry">
+                    <span class="log-time">10:00 AM</span>
+                    <span>Server restarted successfully</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <button class="refresh-button" onclick="refreshMetrics()">Refresh Metrics</button>
+
+    <script>
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['00:00', '04:00', '08:00', '12:00', '16:00', '20:00'],
+                datasets: [{
+                    label: 'CPU Usage',
+                    data: [45, 55, 65, 75, 60, 75],
+                    borderColor: '#EC7D10',
+                    tension: 0.4
+                }, {
+                    label: 'Memory Usage',
+                    data: [30, 35, 40, 45, 40, 45],
+                    borderColor: '#EC0868',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            callback: value => value + '%'
+                        }
+                    }
+                }
+            }
+        });
+
+        function refreshMetrics() {
+            // Simulate refresh with animation
+            const button = document.querySelector('.refresh-button');
+            button.style.transform = 'rotate(360deg)';
+            button.style.transition = 'transform 1s';
+            setTimeout(() => {
+                button.style.transform = 'none';
+                button.style.transition = 'none';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

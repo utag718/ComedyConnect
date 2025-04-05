@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Events</title>
+    
+    <!-- Firebase Scripts -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js"></script>
+
+    <!-- External Styles -->
+    <link rel="stylesheet" href="/artist/styles.css">
+
+    External JavaScript 
+    <!--<script type="module" src="my-events.js"></script>-->
+    <script>
+
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+</head>
+<body>
+    <div class="sidebar">
+        <h2>Artist Hub</h2>
+        <nav>
+        <ul>
+            <li>
+                <a href="/artist/Dashboard/dashboard.html" style="text-decoration: none; color: white;">Dashboard</a>
+            </li>
+            <li class="active">
+                <a href="/artist/myevents/myevents.html" style="text-decoration: none; color: white;">My Events</a>
+            </li>            
+            <li>
+                <a href="/artist/Analytics/analytics.html" style="text-decoration: none; color: white;">Analytics</a>
+            </li>
+            <li>
+                <a href="/artist/Notifications/notifications.html" style="text-decoration: none; color: white;">Notifications</a>
+            </li>
+            <li>
+                <a href="/artist/Profile/profile.html" style="text-decoration: none; color: white;">Profile</a>
+            </li>
+        </ul>
+        </nav>
+        
+                
+    </div>
+
+    <div class="main-content">
+        <header>
+            <h1 class="dashboard_written">My Events</h1>
+        </header>
+
+        
+        <!-- Events Table -->
+        <section class="event-venue-container">
+        <table border="0" cellspacing="20" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Date</th>
+                    <th>Venue</th>
+                    <th>Ticket Price ($)</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="eventsTable">
+                <!-- Sample Placeholder Data -->
+                <tr>
+                    <td>Stand-up Comedy Night</td>
+                    <td>2025-03-15 at 19:00</td>
+                    <td>The Laughing Spot</td>
+                    <td>$20</td>
+                    <td>Pending</td>
+                    <td>
+                        <button style="background-color: #880d1e;
+                        color: aliceblue;
+                        padding: 10px 16px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        border-radius: 6px;
+                        border: none;
+                        cursor: pointer;
+                        transition: 0.3s ease-in-out" onclick="redirectToPoster('Stand-up Comedy Night', '2025-03-15 at 19:00', 'The Laughing Spot', 'Rs.700')">Generate Poster</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Improv Show</td>
+                    <td>2025-04-10 at 18:30</td>
+                    <td>Comedy Central Arena</td>
+                    <td>$15</td>
+                    <td>Approved</td>
+                    <td>
+        
+                            <button style="background-color: #880d1e;
+                            color: aliceblue;
+                            padding: 10px 16px;
+                            font-size: 16px;
+                            font-weight: bold;
+                            border-radius: 6px;
+                            border: none;
+                            cursor: pointer;
+                            transition: 0.3s ease-in-out" onclick="redirectToPoster('Improv Show', '2025-04-10 at 18:30', 'Comedy Central Arena', 'Rs.600')">Generate Poster</button>
+                        </td>
+                </tr>
+                <tr>
+                    <td>Open Mic Night</td>
+                    <td>2025-05-05 at 20:00</td>
+                    <td>Downtown Comedy Club</td>
+                    <td>$10</td>
+                    <td>Rejected</td>
+                    <td>
+        
+                        <button style="background-color: #880d1e;
+                        color: aliceblue;
+                        padding: 10px 16px;
+                        font-size: 16px;
+                        font-weight: bold;
+                        border-radius: 6px;
+                        border: none;
+                        cursor: pointer;
+                        transition: 0.3s ease-in-out" onclick="redirectToPoster('Open Mic Night', '2025-05-05 at 20:00', 'Downtown Comedy Club', 'Rs.500')">Generate Poster</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <section class="event-venue-container">
+    </div>
+
+    <script>
+        function redirectToPoster(title, date, venue, price) {
+            // Encode event details in URL
+            let url = `/artist/myevents/poster.html?title=${encodeURIComponent(title)}&date=${encodeURIComponent(date)}&venue=${encodeURIComponent(venue)}&price=${encodeURIComponent(price)}`;
+            window.location.href = url;
+        }
+    </script>
+</body>
+</html>

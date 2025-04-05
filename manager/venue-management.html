@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venue Management</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">🏢 Venue Management</h1>
+
+        <!-- Venue Form -->
+        <div class="card p-4 shadow-lg mb-4">
+            <h3>Add a New Venue</h3>
+            <form id="venueForm">
+                <div class="mb-3">
+                    <label class="form-label">Venue Name</label>
+                    <input type="text" class="form-control" name="venueName" placeholder="Enter venue name" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Location</label>
+                    <input type="text" class="form-control" name="location" placeholder="Enter location" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Capacity</label>
+                    <input type="number" class="form-control" name="capacity" placeholder="Enter capacity" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Facilities</label>
+                    <textarea class="form-control" name="facilities" placeholder="List facilities" required></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Select Available Dates:</label>
+                    <input type="date" id="datePicker" class="form-control">
+                    <button type="button" id="addDate" class="btn btn-secondary mt-2">Add Date</button>
+                    <div id="selectedDates" class="mt-2"></div>
+                    <input type="hidden" name="availableDates">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Upload Images</label>
+                    <input type="file" class="form-control" name="venueImages" multiple>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Add Venue</button>
+            </form>
+        </div>
+
+        <!-- Venue Display Section -->
+        <h3 class="text-center mt-4">📍 Added Venues</h3>
+        <div id="venueContainer" class="d-flex flex-wrap gap-3 justify-content-center"></div>
+
+        <!-- Availability Calendar -->
+        <div class="card p-4 shadow-lg mt-4">
+            <h3>📅 Availability Calendar</h3>
+            <div id="calendar"></div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize FullCalendar
+        document.addEventListener('DOMContentLoaded', function() {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                editable: true,
+                events: []
+            });
+            calendar.render();
+        });
+
+        // Add Dates Functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            const datePicker = document.getElementById("datePicker");
+            const addDateButton = document.getElementById("addDate");
+            const selectedDatesDiv = document.getElementById("selectedDates");
+            const availableDatesInput = document.querySelector("input[name='availableDates']");
+            let selectedDates = [];
+
+            addDateButton.addEventListener("click", function () {
+                if (datePicker.value) {
+                    const date = datePicker.value;
+
+                    // Avoid duplicate dates
+                    if (!selectedDates.includes(date)) {
+                        selectedDates.push(date);
+                        updateSelectedDates();
+                    } else {
+                        alert("Date already selected.");
+                    }
+                } else {
+                    alert("Please select a date.");
+                }
+            });
+
+            function updateSelectedDates() {
+                selectedDatesDiv.innerHTML = selectedDates.map(date => `<span class="badge bg-info me-1">${date}</span>`).join(" ");
+                availableDatesInput.value = selectedDates.join(",");
+            }
+        });
+
+        // Handle Venue Form Submission
+        document.getElementById("venueForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            // Get form values
+            const venueName = e.target.venueName.value;
+            const location = e.target.location.value;
+            const capacity = e.target.capacity.value;
+            const facilities = e.target.facilities.value;
+            const availableDates = e.target.availableDates.value ? e.target.availableDates.value.split(",") : [];
+            const imageInput = e.target.venueImages.files;
+
+            // Create venue card
+            const venueContainer = document.getElementById("venueContainer");
+            const venueCard = document.createElement("div");
+            venueCard.className = "card p-3 shadow-lg";
+            venueCard.style.width = "18rem";
+
+            let imageHtml = "";
+            if (imageInput.length > 0) {
+                for (let i = 0; i < imageInput.length; i++) {
+                    const imgURL = URL.createObjectURL(imageInput[i]);
+                    imageHtml += `<img src="${imgURL}" class="img-fluid rounded mb-2" alt="Venue Image">`;
+                }
+            }
+
+            venueCard.innerHTML = `
+                ${imageHtml}
+                <h5 class="card-title">${venueName}</h5>
+                <p class="card-text"><strong>Location:</strong> ${location}</p>
+                <p class="card-text"><strong>Capacity:</strong> ${capacity}</p>
+                <p class="card-text"><strong>Facilities:</strong> ${facilities}</p>
+                <p class="card-text"><strong>Available Dates:</strong> ${availableDates.length ? availableDates.join(", ") : "None"}</p>
+            `;
+
+            venueContainer.appendChild(venueCard);
+
+            // Reset form
+            e.target.reset();
+            document.getElementById("selectedDates").innerHTML = "";
+        });
+    </script>
+</body>
+</html>
